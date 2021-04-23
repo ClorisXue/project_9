@@ -1,0 +1,92 @@
+class Snake {
+	field int x, y, direction, length, size;
+ 	field Queue s;
+  	constructor Snake new(int pos_x, int pos_y, int sz) {
+		let x = pos_x;
+		let y = pos_y;
+		let length = 1;
+		let direction = 4;
+		let size = sz;
+		let s = Queue.new(x, y);
+		do drawSquare(x, y);
+		return this;
+  	}
+	method void increaseLength() {
+		let length = length + 1;
+		return;
+	}
+	
+	
+  	method void drawSquare(int pos_x, int pos_y) {
+		do Screen.setColor(true);
+		do Screen.drawRectangle(pos_x, pos_y, pos_x + size - 1, pos_y + size - 1);
+		return;
+  	}
+	
+	method void eraseSquare(int pos_x, int pos_y) {
+		do Screen.setColor(false);
+		do Screen.drawRectangle(pos_x, pos_y, pos_x + size - 1, pos_y + size - 1);
+		return;
+	}
+	
+  	method void draw() {
+		var List tailList;
+		do s.insertElement(x, y);
+		while (length < s.getSize()) {
+			let tailList = s.pop();
+			do eraseSquare(tailList.getX(), tailList.getY());
+		}
+		do drawSquare(x, y);
+		return;
+	}
+
+	method void setDirection(int dir) {
+		let direction = dir;
+		return;
+	}
+
+  	method void move() {
+		//move to left
+		if (direction = 1) {
+	  		let x = x - size;
+		}
+		//move to right
+		if (direction = 2) {
+			let x = x + size;
+		}
+		//move up
+		if (direction = 3) {
+			let y = y - size;
+		}
+		//move down
+		if (direction = 4) {
+			let y = y + size;
+		}
+		return;
+  	}
+
+	method boolean hitFood(Food f) {
+		var boolean hit;
+		let hit = false;
+		if ((x = f.getX()) & (y = f.getY())) {
+			let hit = true;
+		}
+		return hit;
+	}
+
+	method boolean hitWall() {
+		var boolean hit;
+		let hit = false;
+		if ((x < 0) | (y < 0) | (x > 511) | (y > 255) | s.contains(x, y)) {
+			let hit = true;
+		}
+		return hit;
+	}
+
+  	method void dispose(){
+		do s.dispose();
+		do Memory.deAlloc(this);
+		return;
+  	}
+
+}

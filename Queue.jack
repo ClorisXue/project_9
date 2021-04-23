@@ -1,0 +1,53 @@
+class Queue {
+	field int size;
+	field List headList, tailList;
+
+	constructor Queue new(int pos_x, int pos_y) {
+		let headList = List.new(pos_x, pos_y);
+		let size = 1;
+		let tailList = headList;
+		return this;
+	}
+	method int getSize() {
+		return size;
+	}
+
+	method void insertElement(int pos_x, int pos_y) {
+		var List newElement;
+		let newElement = List.new(pos_x, pos_y);
+		do tailList.setNext(newElement);
+		let tailList = newElement;
+		let size = size + 1;
+		return;
+	}
+	method List pop() {
+		var List next, temp;
+		let next = headList.getNext();
+		let temp = List.new(headList.getX(), headList.getY());
+		do Memory.deAlloc(headList);
+		let headList = next;
+		let size = size - 1;
+		return temp;
+	}
+	method boolean contains(int pos_x, int pos_y) {
+		var boolean has;
+		var List next;
+		//let has = false;
+		let next = headList;
+		while (~(next = null)) {
+			if ((next.getX() = pos_x) & (next.getY() = pos_y)) {
+				//let has = true;
+				return true;
+			}
+			let next = next.getNext();
+		}
+		//return has;
+		return false;
+	}
+	method void dispose() {
+		do headList.dispose();
+		do Memory.deAlloc(this);
+		return;
+	}
+	
+}

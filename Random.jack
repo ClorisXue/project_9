@@ -1,0 +1,30 @@
+class Random{
+  static int x;
+  function void seed(int seed) {
+	let x = Ramdon.mod(seed, 16);
+	return;
+  }
+  function int next() {
+	let x = 7919 + (17 * x);
+	return x;
+  }
+  function int between(int x, int y){
+	var int difference, rest;
+	let difference = y - x + 1;
+	let rest = Random.mod(Random.next(), difference) + x;
+	if (rest = y) {
+		let rest = rest - 1;
+	}
+	return rest * 16;
+  }
+
+  function int mod(int x, int y) {
+	var int result;
+	let result = x - (y * (x / y));
+	return result;
+  }
+  method void dispose() {
+	do Memory.deAlloc(this);
+	return;
+  }
+}

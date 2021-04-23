@@ -1,0 +1,30 @@
+class List {
+	field int x, y;
+	field List next;
+	constructor List new (int x_, int y_) {
+		let x = x_;
+		let y = y_;
+		let next = null;
+		return this;
+	}
+	method int getX() {
+		return x;
+	}
+	method int getY() {
+		return y;
+	}
+	method int getNext() {
+		return next;
+	}
+	method void setNext(List n) {
+		let next = n;
+		return;
+	}
+	method void dispose() {
+		if (~(next = null)) {
+			do next.dispose();
+		}
+		do Memory.deAlloc(this);
+		return;
+	}
+}

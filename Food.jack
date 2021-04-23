@@ -1,0 +1,35 @@
+class Food {
+  field int x, y, size;
+  constructor Food new(int pos_x, int pos_y, int sz) {
+	let x = pos_x;
+	let y = pos_y;
+	let size = sz;
+	do drawSquare();
+	return this;
+  }
+  method void dispose() {
+	do Memory.deAlloc(this);
+	return;
+  }
+  method int getX() {
+	return x;
+  }
+  method int getY() {
+	return y;
+  }
+  method void drawSquare() {
+	do Screen.setColor(true);
+	do Screen.drawRectangle(x, y, x + size - 1, y + size - 1);
+	return;
+  }
+  method void getFood() {
+	let x = Random.between(0, 31);
+	let y = Random.between(0, 15);
+	while (Memory.peek(((x / 16) + (y * 32) + 16384))) {
+		let x = Random.between(0, 31);
+		let y = Random.between(0, 15);
+	}
+	do drawSquare();
+	return;
+  }
+}
